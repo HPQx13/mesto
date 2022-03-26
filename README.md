@@ -23,4 +23,4 @@
 
 **GitHub**
 
-* [Ссылка на GitHub Pages]( *ссылка* )
+* [Ссылка на GitHub Pages](https://hpqx13.github.io/mesto/)
