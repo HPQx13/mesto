@@ -1,0 +1,15 @@
+.card {
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: #FFFFFF;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+@media screen and (max-width: 900px) {
+    .card {
+        margin: 0 auto;
+    }
+}

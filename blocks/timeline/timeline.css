@@ -1,0 +1,9 @@
+.timeline {
+    margin: 51px 0 0;
+}
+
+@media screen and (max-width: 600px) {
+    .timeline {
+        margin: 36px 0 0;
+    }
+}

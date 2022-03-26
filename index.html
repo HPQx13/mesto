@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./pages/index.css">
+    <title>Mesto</title>
+    <script src="./scripts/index.js" defer></script>
+</head>
+
+<body class="page">
+    <header class="header">
+        <img class="header__logo" src="./images/logo.svg" alt="Логотип">
+    </header>
+    <main class="content">
+        <section class="profile">
+            <img class="profile__picture" src="./images/profile_picture.jpg" alt="Фото Жака-Ива Кусто">
+            <div class="profile__info">
+                <h2 class="profile__name">Жак-Ив Кусто</h2>
+                <button class="profile__button_edit popup-open"></button>
+                <p class="profile__description">Исследователь океана</p>
+            </div>
+            <button class="profile__button_add"></button>
+        </section>
+        <section class="timeline">
+            <ul class="cards">
+                <li class="card">
+                    <img src="./images/karachaevsk.jpg" alt="фото Карачаевска" class="card__picture">
+                    <div class="card__block">
+                        <h2 class="card__block-title">Карачаевск</h2>
+                        <button class="card__block-button"></button>
+                    </div>
+                </li>
+                <li class="card">
+                    <img src="./images/gora_elbrus.jpg" alt="фото Горы Эльбрус" class="card__picture">
+                    <div class="card__block">
+                        <h2 class="card__block-title">Гора Эльбрус</h2>
+                        <button class="card__block-button"></button>
+                    </div>
+                </li>
+                <li class="card">
+                    <img src="./images/dombai.jpg" alt="фото Домбая" class="card__picture">
+                    <div class="card__block">
+                        <h2 class="card__block-title">Домбай</h2>
+                        <button class="card__block-button"></button>
+                    </div>
+                </li>
+                <li class="card">
+                    <img src="./images/gora_elbrus.jpg" alt="фото Горы Эльбрус" class="card__picture">
+                    <div class="card__block">
+                        <h2 class="card__block-title">Гора Эльбрус</h2>
+                        <button class="card__block-button"></button>
+                    </div>
+                </li>
+                <li class="card">
+                    <img src="./images/dombai.jpg" alt="фото Домбай" class="card__picture">
+                    <div class="card__block">
+                        <h2 class="card__block-title">Домбай</h2>
+                        <button class="card__block-button"></button>
+                    </div>
+                </li>
+                <li class="card">
+                    <img src="./images/karachaevsk.jpg" alt="фото Карачаевска" class="card__picture">
+                    <div class="card__block">
+                        <h2 class="card__block-title">Карачаево-Ч...</h2>
+                        <button class="card__block-button"></button>
+                    </div>
+                </li>
+            </ul>
+        </section>
+    </main>
+    <footer class="footer">
+        <p class="footer__description">&#169; 2022 Mesto Russia</p>
+    </footer>
+    <section class="popup">
+        <div class="popup__container">
+            <h2 class="popup__title">Редактировать профиль</h2>
+            <form class="popup__form" name="name-and-job">
+                <label>
+                    <input class="popup__text popup__text_type_name" name="name" placeholder="Полное имя" type="text"
+                        value>
+                </label>
+                <label>
+                    <input class="popup__text popup__text_type_job" name="text" placeholder="Род деятельности"
+                        type="text" value>
+                </label>
+                <button class="popup__save" type="submit"></button>
+            </form>
+            <button class="popup__close" type="button" aria-label="Закрыть форму"></button>
+        </div>
+    </section>
+</body>
+
+</html>

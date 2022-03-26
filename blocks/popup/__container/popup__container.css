@@ -1,0 +1,19 @@
+.popup__container {
+    transform: translateX(-50%);
+    transform: translateY(-50%);
+    max-width: 430px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    background-color: #FFFFFF;
+    box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.15);
+}
+
+
+
+@media (max-width: 600px) {
+    .popup__container {
+        max-width: 282px;
+    }
+  }
