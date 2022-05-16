@@ -1,12 +1,15 @@
 .profile__name {
     margin: 0;
-    display: grid;
-    font-family: 'Inter';
+    font-family: 'Inter', Arial, sans-serif;
     font-style: normal;
     font-weight: 500;
     font-size: 42px;
     line-height: 48px;
     color: #FFFFFF;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;  
+    display: block;
 }
 
 @media screen and (max-width: 750px) {

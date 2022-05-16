@@ -1,5 +1,4 @@
 .popup__container {
-    transform: translateX(-50%);
     transform: translateY(-50%);
     max-width: 430px;
     position: relative;
