@@ -13,6 +13,7 @@
 
 @media (max-width: 600px) {
     .popup__container {
+        transform:none;
         max-width: 282px;
     }
   }
