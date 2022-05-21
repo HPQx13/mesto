@@ -2,6 +2,7 @@
     padding: 0 0 41px;
     width: 142px;
     color: #FFFFFF;
+    display: block;
 }
 
 @media screen and (max-width: 900px) {
