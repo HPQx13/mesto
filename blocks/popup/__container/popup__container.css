@@ -1,7 +1,7 @@
 .popup__container {
-    transform: translateY(-50%);
+    position: relative; 
+    margin:auto;
     max-width: 430px;
-    position: relative;
     display: flex;
     flex-direction: column;
     border-radius: 10px;

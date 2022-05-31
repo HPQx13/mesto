@@ -12,4 +12,6 @@
     -ms-text-size-adjust: 100%;
     -moz-text-size-adjust: 100%;
     text-rendering: optimizeLegibility;
+    transition: opacity 1s ease-out;
+    opacity: 1;
   }
