@@ -28,10 +28,9 @@
 @import url("../blocks/popup/__save/popup__save.css");
 @import url("../blocks/popup/__close/popup__close.css");
 
-@import url("../blocks/popup/__container/_type_full/popup__container_type_full.css");
-@import url("../blocks/popup/__picture/_type_full/popup__picture_type_full.css");
-@import url("../blocks/popup/__title/_type_full/popup__title_type_full.css");
-
+@import url("../blocks/popup/__fullscr-container/popup__fullscr-container.css");
+@import url("../blocks/popup/__fullscr-picture/popup__fullscr-picture.css");
+@import url("../blocks/popup/__fullscr-title/popup__fullscr-title.css");
 
 /*блок с сеткой и карточками*/
 @import url("../blocks/timeline/timeline.css");
