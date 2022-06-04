@@ -1,6 +1,6 @@
 const profilePopup = document.querySelector('.popup_type_profile'); // попап-профиль
 const profileOpenBtn = document.querySelector('.profile__button-edit'); // Открыть попап-профиль
-const profileCloseBtn = document.querySelector('.popup__close_type_profile'); // Закрыть попап-профиль
+const closeButtons = document.querySelectorAll('.popup__close'); //pfrhsnm попап-профиль
 
 const profileName = document.querySelector('.profile__name'); // имя профиля
 const profileDescription = document.querySelector('.profile__description'); // подпись профиля
@@ -11,7 +11,6 @@ const profilePopupDescriptionInput = document.querySelector('.popup__text_type_j
 
 const btnAddCard = document.querySelector('.profile__button-add'); // кнопка добавления картчоки
 const cardPopup = document.querySelector('.popup_type_card'); // попап-карточки
-const cardPopupCloseBtn = document.querySelector('.popup__close_type_card'); // Закрыть попап-карточки
 const cardPopupPlaceInput = document.querySelector('.popup__text_type_place-name'); // имя профиля
 const cardPopupUrlInput = document.querySelector('.popup__text_type_url'); // подпись профиля
 const cardPopupForm = document.querySelector('.popup__form_type_card'); // форма попап-карточки
@@ -20,7 +19,9 @@ const cards = document.querySelector('.cards'); // список карточек
 const cardTemplate = document.querySelector('.card-template'); // подгружаем форму карточки
 
 const fullscreenPopup = document.querySelector('.popup_type_full') // фул-скрин попап-картинки
-const fullscreenPopupCloseBtn = document.querySelector('.popup__close_type_full'); // кнопка закрыть попап-картинки
+const fullscreenPic = fullscreenPopup.querySelector('.popup__fullscr-picture'); // выбираем картинку в форме
+const fullscreenTitle = fullscreenPopup.querySelector('.popup__fullscr-title'); // выбираем поле текста
+const deafaultCards = [];
 
 // Array of cards
 const initialCards = [
@@ -52,31 +53,46 @@ const initialCards = [
 
 // Init all card in page
 initialCards.forEach(function (item) { // для каждой карточки из массива выполнить безымянную функцию с аргументом айтем
-  addCard(item.name, item.link);  // используя функцию добавления в карточки на страницу данные из массива с ключами нейм и линк
+  deafaultCards.push(createCard(item.name, item.link))
 });
+
+cards.append(...deafaultCards);
 
 //Events listeners
 profileOpenBtn.addEventListener('click', openProfilePopup); //добавляем слушателя события кнопке открытия попапа
-profileCloseBtn.addEventListener('click', function () { closePopup(profilePopup) }); //добавляем слушателя события кнопке закрытия попапа
+closeButtons.forEach((button) => {
+  const popup = button.closest('.popup'); // находим 1 раз ближайший к крестику попап 
+  button.addEventListener('click', () => closePopup(popup)); // устанавливаем обработчик закрытия на крестик
+});
 profilePopupForm.addEventListener('submit', submitProfilePopupForm); //добавляем слушателя события кнопке формы сохранения данных 
 btnAddCard.addEventListener('click', function () { openPopup(cardPopup) }); // добавляем слушателя события по клику запуская функцию
-cardPopupCloseBtn.addEventListener('click', function () { closePopup(cardPopup) }); // добавляем слушателя события для закрытия попапа по клику
 cardPopupForm.addEventListener('submit', submitCardPopupForm); // назначаем слушателя события по нажатию кнопки создать
-fullscreenPopupCloseBtn.addEventListener('click', function () { closePopup(fullscreenPopup) }); // добавляем слушателя на кнопку закрытия попапа для выполнения функции по клику
 
 /**
- * Function prepend new card in card list.
- * @param {string} name Place name.
- * @param {url} url Image url.
+ * Create new card
+ * @param {string} name place name
+ * @param {string} url for img
  */
-function addCard(name, url) { // функция добавления карточки на страниуц с аргументами нейм и ссылка
-  const card = cardTemplate.content.cloneNode(true); // копируем содержимое темплейта в карточку (создаём шаблон)
+function createCard(name, url) {
+  // тут создаете карточку и возвращаете ее
+  const card = cardTemplate.content.cloneNode(true);
+  const cardPic = card.querySelector('.card__picture');
   card.querySelector('.card__block-title').textContent = name; // в карточке указываем поле для вставки текста
-  card.querySelector('.card__picture').setAttribute("src", url); // в карточке добавляем ссылку в атрибут срс
-  card.querySelector('.card__picture').setAttribute("alt", name); // в карточку добавляем описание в атрибут алт
-  card.querySelector('.card__picture').addEventListener('click', openFullScreen); // назначить слушателя события по клику для открытия попапа
+  cardPic.setAttribute("src", url); // в карточке добавляем ссылку в атрибут срс
+  cardPic.setAttribute("alt", name); // в карточку добавляем описание в атрибут алт
+  cardPic.addEventListener('click', openFullScreen); // назначить слушателя события по клику для открытия попапа
   card.querySelector('.card__trash-button').addEventListener('click', removeCard); // назначить слушателя осбытия по клику для кнопки удалить
   card.querySelector('.card__block-button').addEventListener('click', clickLike); // назначить слушателя события по клику для кнопки лайк
+  return card
+}
+
+/**
+ * Add new card in cards
+ * @param {string} name place name
+ * @param {string} url for img
+ */
+function addCard(name, url) {
+  const card = createCard(name, url)
   cards.prepend(card) // в карточки вставляем карточку
 }
 
@@ -137,8 +153,10 @@ function removeCard(evt) { //функция удаления карточки
  * @param {event} evt
  */
 function openFullScreen(evt) { // функция по событию
-  fullscreenPopup.querySelector('.popup__fullscr-picture').setAttribute('src', evt.target.getAttribute('src')); // выбираем картинку в форме и добавляем атрибут в срс из выбранной по клику картинки из атрибута срс
-  fullscreenPopup.querySelector('.popup__fullscr-title').textContent = evt.target.closest('.card').querySelector('.card__block-title').textContent; // выбираем поле текста и контенту присваиваем найденный по клику у ближайшего родительского элемента через селектор текст
+  const namePic = evt.target.closest('.card').querySelector('.card__block-title').textContent;
+  fullscreenPic.setAttribute('src', evt.target.getAttribute('src')); // выбираем картинку в форме и добавляем атрибут в срс из выбранной по клику картинки из атрибута срс
+  fullscreenPic.setAttribute('alt', namePic);
+  fullscreenTitle.textContent = namePic; // выбираем поле текста и контенту присваиваем найденный по клику у ближайшего родительского элемента через селектор текст
   openPopup(fullscreenPopup); // добавляем класс для всплытия попапа
 }
 
@@ -148,8 +166,7 @@ function openFullScreen(evt) { // функция по событию
  */
 function submitCardPopupForm(evt) { // функция добавления карточки и контента в неё
   evt.preventDefault(); // отмена стандартного действия при нажатии кнопки
-  addCard(cardPopup.querySelector('.popup__text_type_place-name').value, cardPopup.querySelector('.popup__text_type_url').value); // функция добавления карточки с указанием откуда брать аргументы
+  addCard(cardPopupPlaceInput.value, cardPopupUrlInput.value); // функция добавления карточки с указанием откуда брать аргументы
   closePopup(cardPopup); //закрываем попап
-  cardPopup.querySelector('.popup__text_type_place-name').value = ''; // очищаем поле попапа после ввода
-  cardPopup.querySelector('.popup__text_type_url').value = ''; // очищаем поле попапа после ввода
+  evt.target.reset() //очищаем поля формы после ввода
 }
