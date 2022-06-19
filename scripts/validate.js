@@ -54,11 +54,14 @@ const hasInvalidInput = (inputList) => {
       return !inputSelect.validity.valid;
   });
 }
+const btnInactive = (buttonElement, inactiveButtonClass) => {
+  buttonElement.classList.add(inactiveButtonClass);
+  buttonElement.setAttribute('disabled', 'disabled');
+}
 
 function toggleButtonState (inputList, buttonElement, inactiveButtonClass) {
   if (hasInvalidInput(inputList)) {
-      buttonElement.classList.add(inactiveButtonClass);
-      buttonElement.setAttribute('disabled', 'disabled');
+      btnInactive(buttonElement, inactiveButtonClass);
   } else {
       buttonElement.classList.remove(inactiveButtonClass);
       buttonElement.removeAttribute('disabled');

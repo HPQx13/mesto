@@ -79,6 +79,17 @@ function createCard(name, url) {
 }
 
 /**
+ * Close form whit click "ECS"
+ * @param {evt} evt 
+ */
+function closeEsc(evt) {
+  if (evt.key === "Escape") {
+      const activePopup = document.querySelector('.popup_opened');
+      closePopup(activePopup)
+  }
+}
+
+/**
  * Add new card in cards
  * @param {string} name place name
  * @param {string} url for img
@@ -94,6 +105,7 @@ function addCard(name, url) {
  */
 function openPopup(nodeElement) { // функция открытия попапа
   nodeElement.classList.add('popup_opened'); // добавляем класс открытия попапа
+  document.addEventListener('keydown', closeEsc);
 }
 
 /**
@@ -102,6 +114,7 @@ function openPopup(nodeElement) { // функция открытия попап�
  */
 function closePopup(nodeElement) { // функция закрытия попапа
   nodeElement.classList.remove('popup_opened'); // удаляем класс открытия попапа
+  document.removeEventListener('keydown', closeEsc);
 }
 
 /**
@@ -161,8 +174,7 @@ function submitCardPopupForm(evt) { // функция добавления ка�
   addCard(cardPopupPlaceInput.value, cardPopupUrlInput.value); // функция добавления карточки с указанием откуда брать аргументы
   closePopup(cardPopup); //закрываем попап
   const buttonElement = cardPopup.querySelector('.popup__button');
-  buttonElement.classList.add('popup__button_disabled'); // добавляем класс кнопке
-  buttonElement.setAttribute('disabled', 'disabled'); // добавляем атрибут кнопке
+  btnInactive(buttonElement, inactiveButtonClass);
   evt.target.reset() //очищаем поля формы после ввода
 }
 
@@ -175,16 +187,6 @@ closeButtons.forEach((button) => {
 profilePopupForm.addEventListener('submit', submitProfilePopupForm); //добавляем слушателя события кнопке формы сохранения данных 
 btnAddCard.addEventListener('click', function () { openPopup(cardPopup) }); // добавляем слушателя события по клику запуская функцию
 cardPopupForm.addEventListener('submit', submitCardPopupForm); // назначаем слушателя события по нажатию кнопки создать
-//добавляем слушателя для закрытия по еск
-document.addEventListener('keydown', (evt) => {
-  if (evt.key === 'Escape') { // закрытие при нажатии еск
-    popups.forEach(function (popup) {
-      if (popup.classList.contains('popup_opened')) {
-        closePopup(popup);
-      }
-    })
-  }
-})
 //добавляем слушателя для закрытия по клику на оверлей
 popups.forEach(function (popup) {
   popup.addEventListener('click', function (event) { // закрытие по оверлею

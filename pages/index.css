@@ -37,6 +37,7 @@
 @import url("../blocks/popup/__fullscr-container/popup__fullscr-container.css");
 @import url("../blocks/popup/__fullscr-picture/popup__fullscr-picture.css");
 @import url("../blocks/popup/__fullscr-title/popup__fullscr-title.css");
+@import url("../blocks/popup/_type_full/popup_type_full.css");
 
 /*блок с сеткой и карточками*/
 @import url("../blocks/timeline/timeline.css");
