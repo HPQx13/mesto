@@ -33,64 +33,66 @@
     <footer class="footer">
         <p class="footer__description">&#169; 2022 Mesto Russia</p>
     </footer>
-
     <section class="popup popup_type_profile">
         <div class="popup__container">
             <h2 class="popup__title">Редактировать профиль</h2>
-            <form class="popup__form popup__form_type_profile" name="name-and-job">
-                <label>
-                    <input class="popup__text popup__text_type_name" name="name" placeholder="Полное имя" type="text"
-                        value>
-                </label>
-                <label>
-                    <input class="popup__text popup__text_type_job" name="text" placeholder="Род деятельности"
-                        type="text" value>
-                </label>
-                <button class="popup__save" type="submit">Сохранить</button>
+            <form class="popup__form popup__form_profile" name="name-and-job" novalidate>
+                <fieldset class="popup__form-set">
+                    <label>
+                        <input id="input-name" class="popup__input popup__input_type_name" name="name"
+                            placeholder="Полное имя" type="text" minlength="2" maxlength="40" required value>
+                        <span class="popup__input-error input-name-error"></span>
+                    </label>
+                    <label>
+                        <input id="input-job" class="popup__input popup__input_type_job" name="text"
+                            placeholder="Род деятельности" type="text" minlength="2" maxlength="200" required value>
+                        <span class="popup__input-error input-job-error"></span>
+                    </label>
+                    <button class="popup__button" type="submit" disabled>Сохранить</button>
+                </fieldset>
             </form>
-            <button class="popup__close popup__close_type_profile" type="button" aria-label="Закрыть форму"></button>
+            <button class="popup__close" type="button" aria-label="Закрыть форму"></button>
         </div>
     </section>
-
     <section class="popup popup_type_card">
         <div class="popup__container">
             <h2 class="popup__title">Новое место</h2>
-            <form class="popup__form popup__form_type_card" name="name-and-job">
-                <label>
-                    <input class="popup__text popup__text_type_place-name" name="name" placeholder="Название"
-                        type="text" value>
-                </label>
-                <label>
-                    <input class="popup__text popup__text_type_url" name="text" placeholder="Ссылка на картинку"
-                        type="url" value>
-                </label>
-                <button class="popup__save" type="submit">Создать</button>
+            <form class="popup__form popup__form_card" name="place-and-img" novalidate>
+                <fieldset class="popup__form-set">
+                    <label>
+                        <input id="input-place" class="popup__input popup__input_type_place" name="name"
+                            placeholder="Название" type="text" minlength="2" maxlength="30" required value>
+                        <span class="popup__input-error input-place-error"></span>
+                    </label>
+                    <label>
+                        <input id="input-img" class="popup__input popup__input_type_img" name="link"
+                            placeholder="Ссылка на картинку" type="url" required value>
+                        <span class="popup__input-error input-img-error"></span>
+                    </label>
+                    <button disabled class="popup__button" type="submit">Создать</button>
+                </fieldset>
             </form>
-            <button class="popup__close popup__close_type_card" type="button" aria-label="Закрыть форму"></button>
+            <button class="popup__close" type="button" aria-label="Закрыть форму"></button>
         </div>
     </section>
-
-    <!--Создать попап для открытие фул-скрин попапа с картинкой-->
     <section class="popup popup_type_full">
         <div class="popup__fullscr-container">
-            <img src="#" class="popup__fullscr-picture">
+            <img src="#" class="popup__fullscr-picture" alt="Открыть фото">
             <h2 class="popup__fullscr-title"></h2>
-            <button class="popup__close popup__close_type_full" type="button" aria-label="Закрыть форму"></button>
+            <button class="popup__close popup__close_type_full" type="button" aria-label="Закрыть фото"></button>
         </div>
     </section>
-    <!--Пустая форма карточки-->
     <template class="card-template">
         <li class="card">
-            <img src="#" class="card__picture">
-            <!--ссылка на картинку-->
-            <button class="card__trash-button" type="button"></button>
+            <img class="card__picture" src="#" alt="#">
+            <button class="card__trash-button" type="button" aria-label="Удалить карточку"></button>
             <div class="card__block">
                 <h2 class="card__block-title"></h2>
-                <!--название-->
-                <button class="card__block-button" type="button"></button>
+                <button class="card__block-button" type="button" aria-label="Лайк"></button>
             </div>
         </li>
     </template>
+    <script src="./scripts/validate.js"></script>
     <script src="./scripts/index.js"></script>
 </body>
 

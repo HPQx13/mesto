@@ -1,19 +1,21 @@
+const popups = document.querySelectorAll('.popup'); // Array of popups
+
 const profilePopup = document.querySelector('.popup_type_profile'); // попап-профиль
 const profileOpenBtn = document.querySelector('.profile__button-edit'); // Открыть попап-профиль
-const closeButtons = document.querySelectorAll('.popup__close'); //pfrhsnm попап-профиль
+const closeButtons = document.querySelectorAll('.popup__close'); //закрытие попап-профиль
 
 const profileName = document.querySelector('.profile__name'); // имя профиля
 const profileDescription = document.querySelector('.profile__description'); // подпись профиля
 
-const profilePopupForm = document.querySelector('.popup__form_type_profile'); // форма попап-профиля
-const profilePupupNameInput = document.querySelector('.popup__text_type_name'); // поле ввода попап-профиля имя
-const profilePopupDescriptionInput = document.querySelector('.popup__text_type_job'); // поле вводу попап-профиля подписи
+const profilePopupForm = document.querySelector('.popup__form_profile'); // форма попап-профиля
+const profilePupupNameInput = document.querySelector('.popup__input_type_name'); // поле ввода попап-профиля имя
+const profilePopupDescriptionInput = document.querySelector('.popup__input_type_job'); // поле вводу попап-профиля подписи
 
 const btnAddCard = document.querySelector('.profile__button-add'); // кнопка добавления картчоки
 const cardPopup = document.querySelector('.popup_type_card'); // попап-карточки
-const cardPopupPlaceInput = document.querySelector('.popup__text_type_place-name'); // имя профиля
-const cardPopupUrlInput = document.querySelector('.popup__text_type_url'); // подпись профиля
-const cardPopupForm = document.querySelector('.popup__form_type_card'); // форма попап-карточки
+const cardPopupPlaceInput = document.querySelector('.popup__input_type_place'); // имя профиля
+const cardPopupUrlInput = document.querySelector('.popup__input_type_img'); // подпись профиля
+const cardPopupForm = document.querySelector('.popup__form_card'); // форма попап-карточки
 
 const cards = document.querySelector('.cards'); // список карточек
 const cardTemplate = document.querySelector('.card-template'); // подгружаем форму карточки
@@ -57,16 +59,6 @@ initialCards.forEach(function (item) { // для каждой карточки �
 });
 
 cards.append(...deafaultCards);
-
-//Events listeners
-profileOpenBtn.addEventListener('click', openProfilePopup); //добавляем слушателя события кнопке открытия попапа
-closeButtons.forEach((button) => {
-  const popup = button.closest('.popup'); // находим 1 раз ближайший к крестику попап 
-  button.addEventListener('click', () => closePopup(popup)); // устанавливаем обработчик закрытия на крестик
-});
-profilePopupForm.addEventListener('submit', submitProfilePopupForm); //добавляем слушателя события кнопке формы сохранения данных 
-btnAddCard.addEventListener('click', function () { openPopup(cardPopup) }); // добавляем слушателя события по клику запуская функцию
-cardPopupForm.addEventListener('submit', submitCardPopupForm); // назначаем слушателя события по нажатию кнопки создать
 
 /**
  * Create new card
@@ -168,5 +160,36 @@ function submitCardPopupForm(evt) { // функция добавления ка�
   evt.preventDefault(); // отмена стандартного действия при нажатии кнопки
   addCard(cardPopupPlaceInput.value, cardPopupUrlInput.value); // функция добавления карточки с указанием откуда брать аргументы
   closePopup(cardPopup); //закрываем попап
+  const buttonElement = cardPopup.querySelector('.popup__button');
+  buttonElement.classList.add('popup__button_disabled'); // добавляем класс кнопке
+  buttonElement.setAttribute('disabled', 'disabled'); // добавляем атрибут кнопке
   evt.target.reset() //очищаем поля формы после ввода
 }
+
+//Events listeners
+profileOpenBtn.addEventListener('click', openProfilePopup); //добавляем слушателя события кнопке открытия попапа
+closeButtons.forEach((button) => {
+  const popup = button.closest('.popup'); // находим 1 раз ближайший к крестику попап 
+  button.addEventListener('click', () => closePopup(popup)); // устанавливаем обработчик закрытия на крестик
+});
+profilePopupForm.addEventListener('submit', submitProfilePopupForm); //добавляем слушателя события кнопке формы сохранения данных 
+btnAddCard.addEventListener('click', function () { openPopup(cardPopup) }); // добавляем слушателя события по клику запуская функцию
+cardPopupForm.addEventListener('submit', submitCardPopupForm); // назначаем слушателя события по нажатию кнопки создать
+//добавляем слушателя для закрытия по еск
+document.addEventListener('keydown', (evt) => {
+  if (evt.key === 'Escape') { // закрытие при нажатии еск
+    popups.forEach(function (popup) {
+      if (popup.classList.contains('popup_opened')) {
+        closePopup(popup);
+      }
+    })
+  }
+})
+//добавляем слушателя для закрытия по клику на оверлей
+popups.forEach(function (popup) {
+  popup.addEventListener('click', function (event) { // закрытие по оверлею
+    if (event.target === event.currentTarget) {
+      closePopup(popup);
+    }
+  });
+})

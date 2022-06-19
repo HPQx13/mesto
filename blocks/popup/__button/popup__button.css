@@ -1,4 +1,4 @@
-.popup__save {
+.popup__button {
     width: 100%;
     margin: 47px 0 0;
     align-self: center;
@@ -13,13 +13,13 @@
     border-radius: 2px;
 }
 
-.popup__save:hover {
+.popup__button:hover {
     opacity: 0.8;
     cursor: pointer;
 }
 
 @media (max-width: 600px) {
-    .popup__save {
+    .popup__button {
         padding-bottom: 14px;
         margin: 44px 0 0;
         font-size: 14px;
