@@ -64,6 +64,7 @@ const hasInvalidInput = (inputList) => {
       return !inputSelect.validity.valid;
   });
 }
+
 const btnInactive = (buttonElement) => {
   buttonElement.classList.add(validationConfig.inactiveButtonClass);
   buttonElement.setAttribute('disabled', 'disabled');
