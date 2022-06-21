@@ -1,5 +1,15 @@
 //валидация форм 
 
+const validationConfig = {
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__button',
+  inactiveButtonClass: 'popup__button_disabled',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__input-error_visible',
+  errorBorder: 'popup__border-error'
+};
+
 const showInputError = (fieldset, inputElement, {inputErrorClass, errorClass, errorBorder, ...rest}, errorMessage) => {
   const errorElement = fieldset.querySelector(`.${inputElement.id}-error`); // находим элемент ошибки 
   inputElement.classList.add(inputErrorClass);
@@ -24,14 +34,14 @@ const checkInputValidity = (fieldset, inputElement, rest) => {
   }
 };
 
-const setEventListeners = (fieldset, {inputSelector, submitButtonSelector,  inactiveButtonClass, ...rest}) => {
+const setEventListeners = (fieldset, {inputSelector, submitButtonSelector, ...rest}) => {
   const inputList = Array.from(fieldset.querySelectorAll(inputSelector)); // создаём массив всех полей внутри формы
   const buttonElement = fieldset.querySelector(submitButtonSelector);
-  toggleButtonState(inputList, buttonElement, inactiveButtonClass);
+  toggleButtonState(inputList, buttonElement);
   inputList.forEach((inputElement) => {
       inputElement.addEventListener('input', function () {
           checkInputValidity(fieldset, inputElement, rest);
-          toggleButtonState(inputList, buttonElement, inactiveButtonClass);
+          toggleButtonState(inputList, buttonElement);
       });
   });
 };
@@ -54,26 +64,18 @@ const hasInvalidInput = (inputList) => {
       return !inputSelect.validity.valid;
   });
 }
-const btnInactive = (buttonElement, inactiveButtonClass) => {
-  buttonElement.classList.add(inactiveButtonClass);
+const btnInactive = (buttonElement) => {
+  buttonElement.classList.add(validationConfig.inactiveButtonClass);
   buttonElement.setAttribute('disabled', 'disabled');
 }
 
-function toggleButtonState (inputList, buttonElement, inactiveButtonClass) {
+function toggleButtonState (inputList, buttonElement) {
   if (hasInvalidInput(inputList)) {
-      btnInactive(buttonElement, inactiveButtonClass);
+      btnInactive(buttonElement);
   } else {
-      buttonElement.classList.remove(inactiveButtonClass);
+      buttonElement.classList.remove(validationConfig.inactiveButtonClass);
       buttonElement.removeAttribute('disabled');
   }
 }
 
-enableValidation({
-  formSelector: '.popup__form',
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__button',
-  inactiveButtonClass: 'popup__button_disabled',
-  inputErrorClass: 'popup__input_type_error',
-  errorClass: 'popup__input-error_visible',
-  errorBorder: 'popup__border-error'
-});
+enableValidation(validationConfig);

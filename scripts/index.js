@@ -174,7 +174,7 @@ function submitCardPopupForm(evt) { // функция добавления ка�
   addCard(cardPopupPlaceInput.value, cardPopupUrlInput.value); // функция добавления карточки с указанием откуда брать аргументы
   closePopup(cardPopup); //закрываем попап
   const buttonElement = cardPopup.querySelector('.popup__button');
-  btnInactive(buttonElement, inactiveButtonClass);
+  btnInactive(buttonElement);
   evt.target.reset() //очищаем поля формы после ввода
 }
 
