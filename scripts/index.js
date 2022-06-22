@@ -1,5 +1,6 @@
 const popups = document.querySelectorAll('.popup'); // Array of popups
 
+
 const profilePopup = document.querySelector('.popup_type_profile'); // попап-профиль
 const profileOpenBtn = document.querySelector('.profile__button-edit'); // Открыть попап-профиль
 const closeButtons = document.querySelectorAll('.popup__close'); //закрытие попап-профиль
@@ -10,12 +11,14 @@ const profileDescription = document.querySelector('.profile__description'); // �
 const profilePopupForm = document.querySelector('.popup__form_profile'); // форма попап-профиля
 const profilePupupNameInput = document.querySelector('.popup__input_type_name'); // поле ввода попап-профиля имя
 const profilePopupDescriptionInput = document.querySelector('.popup__input_type_job'); // поле вводу попап-профиля подписи
+const profileSubmitBtn = profilePopup.querySelector('.popup__button');
 
 const btnAddCard = document.querySelector('.profile__button-add'); // кнопка добавления картчоки
 const cardPopup = document.querySelector('.popup_type_card'); // попап-карточки
 const cardPopupPlaceInput = document.querySelector('.popup__input_type_place'); // имя профиля
 const cardPopupUrlInput = document.querySelector('.popup__input_type_img'); // подпись профиля
 const cardPopupForm = document.querySelector('.popup__form_card'); // форма попап-карточки
+const cardSubmitBtn = cardPopup.querySelector('.popup__button');
 
 const cards = document.querySelector('.cards'); // список карточек
 const cardTemplate = document.querySelector('.card-template'); // подгружаем форму карточки
@@ -25,7 +28,7 @@ const fullscreenPic = fullscreenPopup.querySelector('.popup__fullscr-picture'); 
 const fullscreenTitle = fullscreenPopup.querySelector('.popup__fullscr-title'); // выбираем поле текста
 const deafaultCards = [];
 
-const setInactiveBtnClass = (nodeElement) => btnInactive(nodeElement.querySelector('.popup__button'));
+const inactiveButtonClass = 'popup__button_disabled';
 
 // Array of cards
 const initialCards = [
@@ -86,8 +89,8 @@ function createCard(name, url) {
  */
 function closeEsc(evt) {
   if (evt.key === "Escape") {
-      const activePopup = document.querySelector('.popup_opened');
-      closePopup(activePopup)
+    const activePopup = document.querySelector('.popup_opened');
+    closePopup(activePopup)
   }
 }
 
@@ -101,7 +104,6 @@ function addCard(name, url) {
   cards.prepend(card) // в карточки вставляем карточку
 }
 
-
 /**
  * Add class "popup_opened" for Node
  * @param {Node} nodeElement
@@ -109,7 +111,6 @@ function addCard(name, url) {
 function openPopup(nodeElement) { // функция открытия попапа
   nodeElement.classList.add('popup_opened'); // добавляем класс открытия попапа
   document.addEventListener('keydown', closeEsc);
-  setInactiveBtnClass(nodeElement);
 }
 
 /**
@@ -119,8 +120,6 @@ function openPopup(nodeElement) { // функция открытия попап�
 function closePopup(nodeElement) { // функция закрытия попапа
   nodeElement.classList.remove('popup_opened'); // удаляем класс открытия попапа
   document.removeEventListener('keydown', closeEsc);
-  nodeElement.querySelector('form').reset();
-  setInactiveBtnClass(nodeElement);
 }
 
 /**
@@ -141,6 +140,7 @@ function submitProfilePopupForm(evt) { //функция нажатия кноп�
   profileName.textContent = profilePupupNameInput.value; // на страницу присваивается значение из инпута
   profileDescription.textContent = profilePopupDescriptionInput.value; // на страницу присваивается значение из инпута
   closePopup(profilePopup);//вызов функции закрытия попапа
+  btnInactive(profileSubmitBtn, inactiveButtonClass);
 }
 
 /**
@@ -179,6 +179,7 @@ function submitCardPopupForm(evt) { // функция добавления ка�
   evt.preventDefault(); // отмена стандартного действия при нажатии кнопки
   addCard(cardPopupPlaceInput.value, cardPopupUrlInput.value); // функция добавления карточки с указанием откуда брать аргументы
   closePopup(cardPopup); //закрываем попап
+  btnInactive(cardSubmitBtn, inactiveButtonClass);
   evt.target.reset() //очищаем поля формы после ввода
 }
 
