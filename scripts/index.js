@@ -140,7 +140,7 @@ function submitProfilePopupForm(evt) { //функция нажатия кноп�
   profileName.textContent = profilePupupNameInput.value; // на страницу присваивается значение из инпута
   profileDescription.textContent = profilePopupDescriptionInput.value; // на страницу присваивается значение из инпута
   closePopup(profilePopup);//вызов функции закрытия попапа
-  btnInactive(profileSubmitBtn, inactiveButtonClass);
+  setBtnInactive(profileSubmitBtn, inactiveButtonClass);
 }
 
 /**
@@ -179,7 +179,7 @@ function submitCardPopupForm(evt) { // функция добавления ка�
   evt.preventDefault(); // отмена стандартного действия при нажатии кнопки
   addCard(cardPopupPlaceInput.value, cardPopupUrlInput.value); // функция добавления карточки с указанием откуда брать аргументы
   closePopup(cardPopup); //закрываем попап
-  btnInactive(cardSubmitBtn, inactiveButtonClass);
+  setBtnInactive(cardSubmitBtn, inactiveButtonClass);
   evt.target.reset() //очищаем поля формы после ввода
 }
 
