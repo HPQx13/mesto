@@ -1,5 +1,7 @@
-const popups = document.querySelectorAll('.popup'); // Array of popups
+import Card from './Card.js';
+import FormValidation from './FormValidator.js'
 
+const popups = document.querySelectorAll('.popup'); // Array of popups
 
 const profilePopup = document.querySelector('.popup_type_profile'); // попап-профиль
 const profileOpenBtn = document.querySelector('.profile__button-edit'); // Открыть попап-профиль
@@ -26,9 +28,20 @@ const cardTemplate = document.querySelector('.card-template'); // подгруж
 const fullscreenPopup = document.querySelector('.popup_type_full') // фул-скрин попап-картинки
 const fullscreenPic = fullscreenPopup.querySelector('.popup__fullscr-picture'); // выбираем картинку в форме
 const fullscreenTitle = fullscreenPopup.querySelector('.popup__fullscr-title'); // выбираем поле текста
-const deafaultCards = [];
 
 const inactiveButtonClass = 'popup__button_disabled';
+
+const classSelector = {
+  fieldSetClass: '.popup__form-set',
+  inputClass: '.popup__input',
+  submitButtonClass: '.popup__button',
+  inactiveButtonClass: 'popup__button_disabled',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__input-error_visible',
+  errorBorderClass: 'popup__border-error'
+};
+
+const forms = document.querySelectorAll('form');
 
 // Array of cards
 const initialCards = [
@@ -60,27 +73,29 @@ const initialCards = [
 
 // Init all card in page
 initialCards.forEach(function (item) { // для каждой карточки из массива выполнить безымянную функцию с аргументом айтем
-  deafaultCards.push(createCard(item.name, item.link))
+  addCard(item.name, item.link)
 });
 
-cards.append(...deafaultCards);
+/**
+ * func open full screen image
+ * @param {string} name is name of place
+ * @param {url} link is link for image
+ */
+ function openFullScreen(name, link) {
+  fullscreenPic.setAttribute('src', link);
+  fullscreenPic.setAttribute('alt', name);
+  fullscreenTitle.textContent = name;
+  openPopup(fullscreenPopup);
+}
 
 /**
- * Create new card
- * @param {string} name place name
- * @param {string} url for img
+ * func added new card in cards list
+ * @param {string} name is name of place
+ * @param {url} link is link for image
  */
-function createCard(name, url) {
-  // тут создаете карточку и возвращаете ее
-  const card = cardTemplate.content.cloneNode(true);
-  const cardPic = card.querySelector('.card__picture');
-  card.querySelector('.card__block-title').textContent = name; // в карточке указываем поле для вставки текста
-  cardPic.setAttribute("src", url); // в карточке добавляем ссылку в атрибут срс
-  cardPic.setAttribute("alt", name); // в карточку добавляем описание в атрибут алт
-  cardPic.addEventListener('click', openFullScreen); // назначить слушателя события по клику для открытия попапа
-  card.querySelector('.card__trash-button').addEventListener('click', removeCard); // назначить слушателя осбытия по клику для кнопки удалить
-  card.querySelector('.card__block-button').addEventListener('click', clickLike); // назначить слушателя события по клику для кнопки лайк
-  return card
+ function addCard(name, link) {
+  let cardEl = new Card(cardTemplate, name, link, openFullScreen);
+  cards.prepend(cardEl.getCard());
 }
 
 /**
@@ -92,16 +107,6 @@ function closeEsc(evt) {
     const activePopup = document.querySelector('.popup_opened');
     closePopup(activePopup)
   }
-}
-
-/**
- * Add new card in cards
- * @param {string} name place name
- * @param {string} url for img
- */
-function addCard(name, url) {
-  const card = createCard(name, url)
-  cards.prepend(card) // в карточки вставляем карточку
 }
 
 /**
@@ -144,34 +149,6 @@ function submitProfilePopupForm(evt) { //функция нажатия кноп�
 }
 
 /**
- * Add or remove like
- * @param {event} evt
- */
-function clickLike(evt) { // функция с параметром события
-  evt.target.classList.toggle('card__block-button_active');// на что нажали - меняем класс
-}
-
-/**
- * Remove card from cards
- * @param {event} evt
- */
-function removeCard(evt) { //функция удаления карточки
-  evt.target.closest('.card').remove();// событие нажатия удалить родительский элемент
-}
-
-/**
- * Open popup for fullscreen picture
- * @param {event} evt
- */
-function openFullScreen(evt) { // функция по событию
-  const namePic = evt.target.closest('.card').querySelector('.card__block-title').textContent;
-  fullscreenPic.setAttribute('src', evt.target.getAttribute('src')); // выбираем картинку в форме и добавляем атрибут в срс из выбранной по клику картинки из атрибута срс
-  fullscreenPic.setAttribute('alt', namePic);
-  fullscreenTitle.textContent = namePic; // выбираем поле текста и контенту присваиваем найденный по клику у ближайшего родительского элемента через селектор текст
-  openPopup(fullscreenPopup); // добавляем класс для всплытия попапа
-}
-
-/**
  * Submit popup cart form. Add new card in cards
  * @param {event} evt
  */
@@ -199,4 +176,9 @@ popups.forEach(function (popup) {
       closePopup(popup);
     }
   });
+})
+
+forms.forEach((form) => {
+  const formValidEl = new FormValidation(classSelector, form);
+  formValidEl.enableValidation();
 })
