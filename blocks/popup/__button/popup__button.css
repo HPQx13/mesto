@@ -1,8 +1,8 @@
 .popup__button {
     width: 100%;
-    margin: 47px 0 0;
+    margin: 17px 0 0;
     align-self: center;
-    border: none;
+    border: #000000 solid 1px;
     padding: 14px 14px 18px 14px;
     font-weight: 400;
     font-size: 18px;
