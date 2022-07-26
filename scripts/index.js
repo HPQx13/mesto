@@ -4,7 +4,6 @@ import FormValidator from './FormValidator.js'
 const popups = document.querySelectorAll('.popup'); // Array of popups
 const cardClassSelector = '.card-template';
 
-
 const profilePopup = document.querySelector('.popup_type_profile'); // попап-профиль
 const profileOpenBtn = document.querySelector('.profile__button-edit'); // Открыть попап-профиль
 const closeButtons = document.querySelectorAll('.popup__close'); //закрытие попап-профиль
@@ -21,7 +20,6 @@ const cardPopup = document.querySelector('.popup_type_card'); // попап-ка
 const cardPopupPlaceInput = document.querySelector('.popup__input_type_place'); // имя профиля
 const cardPopupUrlInput = document.querySelector('.popup__input_type_img'); // подпись профиля
 const cardPopupForm = document.querySelector('.popup__form_card'); // форма попап-карточки
-const cardSubmitBtn = cardPopup.querySelector('.popup__button');
 
 const cardsContainer = document.querySelector('.cards'); // список карточек
 
@@ -69,7 +67,7 @@ const initialCards = [
 // Init all card in page
 initialCards.forEach(function (item) { // для каждой карточки из массива выполнить безымянную функцию с аргументом айтем
   const cardEl = createCard(cardClassSelector, item.name, item.link, openFullScreen);
-  cardsContainer.append(cardEl.getCard());
+  cardsContainer.append(cardEl);
 });
 
 /**
@@ -84,9 +82,8 @@ function openFullScreen(name, link) {
   openPopup(fullscreenPopup);
 }
 
-
 function createCard(cardClassSelector, name, link, openFullScreen) {
-  return new Card(cardClassSelector, name, link, openFullScreen);
+  return new Card(cardClassSelector, name, link, openFullScreen).getCard();
 }
 
 /**
@@ -125,6 +122,7 @@ function openProfilePopup() { // функция открытия попапа п
   openPopup(profilePopup); // выполнить функцию открытия попапа 
   profilePupupNameInput.value = profileName.textContent; // в полле ввода при открытии назначается тест из профиля на странице
   profilePopupDescriptionInput.value = profileDescription.textContent; // в полле ввода при открытии назначается подпись из профиля на странице
+  profileValidation.resetValidation();
 }
 
 /**
@@ -137,7 +135,6 @@ function submitProfilePopupForm(evt) { //функция нажатия кноп�
   profileDescription.textContent = profilePopupDescriptionInput.value; // на страницу присваивается значение из инпута
   closePopup(profilePopup);//вызов функции закрытия попапа
   evt.target.reset();
-  profileValidation.enableValidation();
 }
 
 /**
@@ -147,10 +144,9 @@ function submitProfilePopupForm(evt) { //функция нажатия кноп�
 function submitCardPopupForm(evt) { // функция добавления карточки и контента в неё
   evt.preventDefault(); // отмена стандартного действия при нажатии кнопки
   const cardEl = createCard(cardClassSelector, cardPopupPlaceInput.value, cardPopupUrlInput.value, openFullScreen);
-  cardsContainer.prepend(cardEl.getCard());
+  cardsContainer.prepend(cardEl);
   closePopup(cardPopup); //закрываем попап
-  evt.target.reset() //очищаем поля формы после ввода
-  newCardValidation.enableValidation();
+  evt.target.reset() //очищаем поля формы после ввода 
 }
 
 //Events listeners
@@ -160,7 +156,10 @@ closeButtons.forEach((button) => {
   button.addEventListener('click', () => closePopup(popup)); // устанавливаем обработчик закрытия на крестик
 });
 profilePopupForm.addEventListener('submit', submitProfilePopupForm); //добавляем слушателя события кнопке формы сохранения данных 
-btnAddCard.addEventListener('click', function () { openPopup(cardPopup) }); // добавляем слушателя события по клику запуская функцию
+btnAddCard.addEventListener('click', function () {
+  openPopup(cardPopup);
+  newCardValidation.resetValidation();
+}); // добавляем слушателя события по клику запуская функцию
 cardPopupForm.addEventListener('submit', submitCardPopupForm); // назначаем слушателя события по нажатию кнопки создать
 //добавляем слушателя для закрытия по клику на оверлей
 popups.forEach(function (popup) {
